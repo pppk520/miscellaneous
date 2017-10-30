@@ -1,5 +1,6 @@
 FROM python:3.5
 
+# from build-arg
 ARG ARG_GOPARDIR
 ARG ARG_GOROOT
 ARG ARG_GOPATH
@@ -7,6 +8,7 @@ ARG ARG_GOPATH
 ENV GOPARDIR ${ARG_GOPARDIR}
 ENV GOROOT ${ARG_GOROOT}
 ENV GOPATH ${ARG_GOPATH}
+ENV PATH $GOPATH/bin:$GOROOT/bin:$PATH
 
 RUN env
 
@@ -23,9 +25,9 @@ RUN pip install -r /tmp/requirements.txt
 RUN apt-get install -y libzmq3-dev
 
 # golang & gophernotes jupyter kernel
+RUN mkdir -p ${ARG_GOPARDIR}
 COPY install-go.sh /tmp/
-RUN chmod +x /tmp/install-go.sh
-RUN /tmp/install-go.sh
+RUN /bin/bash /tmp/install-go.sh
 
 # install vim
 RUN apt-get install -y vim

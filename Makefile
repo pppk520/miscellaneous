@@ -15,9 +15,9 @@ HOST_PORT ?= 80
 # -------------------------                                                     
 # golang path                                                        
 # -------------------------
-GOPARDIR = "/tmp"                                                         
-GOROOT = "$(GOPARDIR)/go"                                                        
-GOPATH = "/tmp/golang" 
+GOPARDIR = '/tmp'
+GOROOT = '$(GOPARDIR)/go'
+GOPATH = '/tmp/golang'
 
 # -------------------------
 # Main
@@ -34,8 +34,6 @@ run:
 	docker run --rm \
 	  -v $(HOST_PATH):$(GUEST_PATH) \
 	  -p $(HOST_PORT):80 \
-	  -e GOROOT=$(GOROOT) \
-	  -e GOPATH=$(GOPATH) \
 	  $(DOCKER_OPTIONS) -it $(REPO):$(TAG) /bin/bash -c $(CMD_DEV)
 
 test:
