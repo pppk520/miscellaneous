@@ -1,0 +1,32 @@
+class Solution:
+    # @param A : string
+    # @return a list of integers
+    def maxLCS(self, A):
+        s = A
+
+        max_k = 1
+        max_len = 0
+
+        for k in range(1, len(A)):
+            dp = [[0 for _ in range(len(A) - k + 1)] for _ in range(k + 1)]
+
+            for i in range(1, k + 1):
+                for j in range(1, len(A) - k + 1):
+                    if s[i - 1] == s[len(A) - j]:
+                        dp[i][j] = max(dp[i - 1][j - 1] + 1, 
+                                       dp[i - 1][j],
+                                       dp[i][j - 1])
+                    else:
+                        dp[i][j] = max(dp[i - 1][j - 1], 
+                                       dp[i - 1][j],
+                                       dp[i][j - 1])
+
+            if dp[-1][-1] > max_len:
+                max_k = k
+                max_len = dp[-1][-1]
+
+        return [max_k, max_len]
+
+
+print(Solution().maxLCS('abc')) # [1, 0]
+print(Solution().maxLCS('abba')) # [2, 2]
